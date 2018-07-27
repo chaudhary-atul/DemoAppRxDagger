@@ -4,6 +4,8 @@ package com.example.mildly.demoapprxdagger;
 import android.app.Activity;
 import android.app.Application;
 
+import com.example.mildly.demoapprxdagger.di.component.DaggerApplicationComponent;
+
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
@@ -20,7 +22,7 @@ public class RxDaggerApplication extends Application implements HasActivityInjec
         super.onCreate();
         DaggerApplicationComponent
                 .builder()
-                .application(this)
+                .context(this)
                 .build()
                 .inject(this);
     }

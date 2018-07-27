@@ -15,16 +15,16 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Singleton
 @Component(modules = {
         AndroidSupportInjectionModule.class,
-        ActivityBuilder.class,
+        NetworkModule.class,
         ApplicationModule.class,
-        NetworkModule.class
+        ActivityBuilder.class
 })
 public interface ApplicationComponent {
 
     @Component.Builder
     interface Builder {
         @BindsInstance
-        Builder application(RxDaggerApplication rxDaggerApplication);
+        Builder context(RxDaggerApplication rxDaggerApplication);
 
         ApplicationComponent build();
     }

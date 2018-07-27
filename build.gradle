@@ -32,6 +32,9 @@ ext{
     dagger2Version = '2.16'
     rxjava2Version = '2.1.17'
     rxandroidVersion = '2.0.2'
+    retrofitVersion='2.4.0'
+    gsonVersion='2.8.5'
+    butterknifeVersion='8.8.1'
 
 }
 

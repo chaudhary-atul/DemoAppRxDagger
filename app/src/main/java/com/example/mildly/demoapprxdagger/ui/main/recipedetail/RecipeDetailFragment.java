@@ -25,6 +25,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMvpView {
 
     private static final String PARAM = "recipeId";
+
     @Inject
     RecipeDetailMvpPresenter<RecipeDetailMvpView> presenter;
 
@@ -74,6 +75,7 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
 
     @Override
     protected void setUp(View view) {
+        showLoading();
         presenter.fetchRecipeDetail(recipeId);
     }
 
@@ -86,7 +88,7 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
 
     @Override
     public void showDataInView(Recipe recipe) {
-
+        hideLoading();
         if (recipe.getTitle() != null)
             recipeTitle.setText(recipe.getTitle());
 
@@ -101,11 +103,12 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
                     .into(recipeImg);
         }
 
-        if(recipe.getIngredients()!=null && recipe.getIngredients().size()>0) {
-            for (int i=0; i< recipe.getIngredients().size(); i++) {
+        if (recipe.getIngredients() != null && recipe.getIngredients().size() > 0) {
+            for (int i = 0; i < recipe.getIngredients().size(); i++) {
                 TextView tv = new TextView(getActivity());
                 tv.setText(recipe.getIngredients().get(i));
                 tv.setId(i);
+                tv.setPadding(0, 0, 0, 8);
                 ingredientsMainView.addView(tv);
             }
         }

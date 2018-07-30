@@ -33,7 +33,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
-public class MainActivity extends BaseActivity implements MainMvpView,HasSupportFragmentInjector, RecipesAdapter.ItemInteractionListner {
+public class MainActivity extends BaseActivity implements MainMvpView, HasSupportFragmentInjector, RecipesAdapter.ItemInteractionListner {
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
@@ -142,20 +142,33 @@ public class MainActivity extends BaseActivity implements MainMvpView,HasSupport
     public void onVisitSiteClicked(String sourceUrl) {
         customTabIntent.setStartAnimations(this, android.R.anim.fade_in, android.R.anim.fade_out)
                 .setExitAnimations(this, android.R.anim.fade_in, android.R.anim.fade_out)
-                .build().launchUrl(this,Uri.parse(sourceUrl));
+                .build().launchUrl(this, Uri.parse(sourceUrl));
     }
 
     @Override
     public void onRecipeClicked(String recipe_id) {
+        recyclerView.setVisibility(View.GONE);
         frameLayout.setVisibility(View.VISIBLE);
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.frameLayout, RecipeDetailFragment.newInstance(recipe_id))
+                .add(R.id.frameLayout, RecipeDetailFragment.newInstance(recipe_id)).addToBackStack(null)
                 .commit();
     }
 
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return fragmentDispatchingAndroidInjector;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().beginTransaction().remove(new RecipeDetailFragment()).commit();
+            getSupportFragmentManager().popBackStackImmediate();
+            frameLayout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

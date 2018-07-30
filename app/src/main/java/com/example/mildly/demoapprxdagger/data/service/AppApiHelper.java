@@ -3,6 +3,7 @@ package com.example.mildly.demoapprxdagger.data.service;
 import com.example.mildly.demoapprxdagger.data.Config;
 import com.example.mildly.demoapprxdagger.data.pojo.Recipe;
 import com.example.mildly.demoapprxdagger.data.pojo.Recipes;
+import com.example.mildly.demoapprxdagger.data.pojo.SingleRecipe;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -10,7 +11,7 @@ import javax.inject.Singleton;
 import io.reactivex.Observable;
 
 @Singleton
-public class AppApiHelper implements ApiHelper{
+public class AppApiHelper implements ApiHelper {
     private final RecipeService recipeService;
 
     @Inject
@@ -20,11 +21,11 @@ public class AppApiHelper implements ApiHelper{
 
     @Override
     public Observable<Recipes> getRecipes(int page) {
-        return recipeService.getRecipes(Config.RECIPES_API_KEY, 20,page, "r");
+        return recipeService.getRecipes(Config.RECIPES_API_KEY, 20, page, "r");
     }
 
     @Override
-    public Observable<Recipe> getRecipe(String recipeId) {
+    public Observable<SingleRecipe> getRecipe(String recipeId) {
         return recipeService.getRecipe(Config.RECIPES_API_KEY, recipeId);
     }
 }

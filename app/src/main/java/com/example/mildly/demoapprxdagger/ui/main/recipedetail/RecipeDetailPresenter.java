@@ -3,6 +3,7 @@ package com.example.mildly.demoapprxdagger.ui.main.recipedetail;
 import com.example.mildly.demoapprxdagger.data.DataManager;
 import com.example.mildly.demoapprxdagger.data.pojo.Recipe;
 import com.example.mildly.demoapprxdagger.data.pojo.Recipes;
+import com.example.mildly.demoapprxdagger.data.pojo.SingleRecipe;
 import com.example.mildly.demoapprxdagger.ui.base.BasePresenter;
 
 import javax.inject.Inject;
@@ -25,11 +26,11 @@ public class RecipeDetailPresenter<V extends RecipeDetailMvpView> extends BasePr
                 .getRecipe(recipeId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Recipe>() {
+                .subscribe(new Consumer<SingleRecipe>() {
                     @Override
-                    public void accept(Recipe recipe) throws Exception {
+                    public void accept(SingleRecipe recipe) throws Exception {
                         if (recipe != null) {
-                            getMvpView().showDataInView(recipe);
+                            getMvpView().showDataInView(recipe.getRecipe());
                         }
                     }
                 }, new Consumer<Throwable>() {

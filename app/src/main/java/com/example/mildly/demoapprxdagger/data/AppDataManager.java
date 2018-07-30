@@ -1,10 +1,8 @@
 package com.example.mildly.demoapprxdagger.data;
 
-import com.example.mildly.demoapprxdagger.data.pojo.Recipe;
 import com.example.mildly.demoapprxdagger.data.pojo.Recipes;
+import com.example.mildly.demoapprxdagger.data.pojo.SingleRecipe;
 import com.example.mildly.demoapprxdagger.data.service.ApiHelper;
-
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,7 +25,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<Recipe> getRecipe(String recipeId) {
+    public Observable<SingleRecipe> getRecipe(String recipeId) {
         return apiHelper.getRecipe(recipeId);
     }
 

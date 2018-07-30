@@ -1,7 +1,7 @@
 package com.example.mildly.demoapprxdagger.data.service;
 
-import com.example.mildly.demoapprxdagger.data.pojo.Recipe;
 import com.example.mildly.demoapprxdagger.data.pojo.Recipes;
+import com.example.mildly.demoapprxdagger.data.pojo.SingleRecipe;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -18,7 +18,7 @@ public interface RecipeService {
     );
 
     @GET("get")
-    Observable<Recipe> getRecipe(
+    Observable<SingleRecipe> getRecipe(
             @Query("key") String key,
             @Query("rId") String recipeId
 

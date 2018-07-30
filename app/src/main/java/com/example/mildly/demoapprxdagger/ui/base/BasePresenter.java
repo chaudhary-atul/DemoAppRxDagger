@@ -1,5 +1,7 @@
 package com.example.mildly.demoapprxdagger.ui.base;
 
+import com.example.mildly.demoapprxdagger.data.DataManager;
+
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -9,11 +11,13 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
     private static final String TAG = BasePresenter.class.getSimpleName();
 
     private final CompositeDisposable compositeDisposable;
+    private final DataManager dataManager;
 
     private V mvpView;
 
     @Inject
-    public BasePresenter(CompositeDisposable compositeDisposable) {
+    public BasePresenter(DataManager dataManager, CompositeDisposable compositeDisposable) {
+        this.dataManager=dataManager;
         this.compositeDisposable = compositeDisposable;
     }
 
@@ -38,6 +42,10 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
     public void checkViewAttached() {
         if (!isViewAttached()) throw new MvpViewNotAttachedException();
+    }
+
+    public DataManager getDataManager() {
+        return dataManager;
     }
 
     public CompositeDisposable getCompositeDisposable() {

@@ -1,6 +1,7 @@
-package com.example.mildly.demoapprxdagger.ui.main;
+package com.example.mildly.demoapprxdagger.ui.main.recipedetail;
 
 import com.example.mildly.demoapprxdagger.data.DataManager;
+import com.example.mildly.demoapprxdagger.data.pojo.Recipe;
 import com.example.mildly.demoapprxdagger.data.pojo.Recipes;
 import com.example.mildly.demoapprxdagger.ui.base.BasePresenter;
 
@@ -11,31 +12,24 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> implements MainMvpPresenter<V> {
-    private int page=1;
+public class RecipeDetailPresenter<V extends RecipeDetailMvpView> extends BasePresenter<V> implements RecipeDetailMvpPresenter<V> {
 
     @Inject
-    public MainPresenter(DataManager dataManager, CompositeDisposable compositeDisposable) {
-        super(dataManager,compositeDisposable);
+    public RecipeDetailPresenter(DataManager dataManager, CompositeDisposable compositeDisposable) {
+        super(dataManager, compositeDisposable);
     }
 
     @Override
-    public void onViewPrepared() {
-        fetchRecipes();
-    }
-
-    @Override
-    public void fetchRecipes() {
+    public void fetchRecipeDetail(String recipeId) {
         getCompositeDisposable().add(getDataManager()
-                .getRecipes(page)
+                .getRecipe(recipeId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Recipes>() {
+                .subscribe(new Consumer<Recipe>() {
                     @Override
-                    public void accept(Recipes recipes) throws Exception {
-                        if (recipes != null) {
-                            getMvpView().updateRecipeList(recipes.getRecipes());
-                            ++page;
+                    public void accept(Recipe recipe) throws Exception {
+                        if (recipe != null) {
+                            getMvpView().showDataInView(recipe);
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -45,16 +39,8 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
                             return;
                         }
                         handleApiError(throwable);
-                        getMvpView().showErrorInRecyclerView();
+                        getMvpView().showError("Something went wrong");
                     }
                 }));
-
     }
-
-   /* @Override
-    public void getRecipeFromRecipeId(String recipe_id) {
-
-    }*/
-
-
 }

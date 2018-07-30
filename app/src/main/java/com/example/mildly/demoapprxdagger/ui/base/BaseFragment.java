@@ -12,6 +12,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
+import com.example.mildly.demoapprxdagger.utils.CommonUtils;
+
 public abstract class BaseFragment extends Fragment implements MvpView {
 
     private BaseActivity baseActivity;
@@ -37,12 +39,11 @@ public abstract class BaseFragment extends Fragment implements MvpView {
 
     protected abstract void setUp(View view);
 
-   /* @Override
+    @Override
     public void showLoading() {
         hideLoading();
         progressDialog = CommonUtils.showLoadingDialog(this.getContext());
     }
-*/
     @Override
     public void hideLoading() {
         if (progressDialog != null && progressDialog.isShowing()) {
